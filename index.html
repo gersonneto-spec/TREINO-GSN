@@ -66,6 +66,11 @@ section.view.on{display:block}
 .kpi .u{font-size:13px;color:var(--ink-2);font-family:var(--f-body);font-weight:400}
 
 /* ---------- seletor de treino ---------- */
+.pickhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.datalbl{font-family:var(--f-disp);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+.dataimp{background:var(--surface);border:1px solid var(--line-strong);border-radius:8px;padding:6px 9px;font-family:var(--f-mono);font-size:13px}
+.dataimp:focus{outline:2px solid var(--accent-line);outline-offset:-1px}
+.aberto{font-size:10px;letter-spacing:.04em;color:var(--pr);background:var(--pr-soft);border-radius:99px;padding:0 6px;text-transform:none}
 .picker{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;flex-wrap:nowrap}
 @media (min-width:780px){.picker{flex-wrap:wrap;overflow:visible}.picker button{flex:1 1 158px}}
 .picker button{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:left;min-width:132px;line-height:1.25}
@@ -193,7 +198,12 @@ table.data tr:last-child td{border-bottom:0}
   <!-- ============ TREINO ============ -->
   <section class="view on" id="v-treino" role="tabpanel" aria-labelledby="tab-treino">
     <div class="strip" id="kpis"></div>
-    <div class="eyebrow" style="margin-bottom:7px">Sess&atilde;o</div>
+    <div class="pickhead">
+      <span class="eyebrow">Escolha o treino</span>
+      <label class="datalbl" for="dataSessao">Data</label>
+      <input type="date" id="dataSessao" class="dataimp">
+      <button class="btn sm" id="btnHoje">Hoje</button>
+    </div>
     <div class="picker" id="picker"></div>
     <div id="exlist" class="exlist"></div>
   </section>
@@ -343,7 +353,7 @@ ex("mob_spider","Spider","mobilidade","mob");
    ============================================================ */
 const P = (id,p,extra)=>({id,presc:p,obs:extra||""});
 const TREINOS = [
-  {id:"mob", dia:"Todos os dias", diaN:-1, nome:"Mobilidade", full:"MOBILIDADE TODOS OS DIAS", itens:[
+  {id:"mob", cod:"Mobilidade", dia:"Todos os dias", diaN:-1, nome:"Rotina diária", full:"MOBILIDADE TODOS OS DIAS", itens:[
     P("mob_tornozelo","8x cada lado + 10\" isometria embaixo"),
     P("mob_sapinho","6x dinâmico + 15\" alongando"),
     P("mob_psoas","6x dinâmico + 15\" alongando"),
@@ -351,13 +361,13 @@ const TREINOS = [
     P("mob_toracica_lat","6x cada lado"),
     P("mob_spider","Sobe e desce 3x cada lado (linha do ombro até o queixo) = 1 rep. Fazer 3 reps")
   ]},
-  {id:"t1", dia:"Segunda", diaN:1, nome:"OFF · Cardio, panturrilha e abdômen", full:"TREINO 1 - OFF - CARDIO PANTURRILHA E ABDOMEN", itens:[
+  {id:"t1", cod:"Treino 1", dia:"Segunda", diaN:1, nome:"OFF · Cardio, panturrilha e abdômen", full:"TREINO 1 - OFF - CARDIO PANTURRILHA E ABDOMEN", itens:[
     P("abd_corda","3 x 15 a 20 máximas","Intervalo 60\""),
     P("abd_infra","3 x 15 a 20 movimento controlado","Intervalo 60\""),
     P("pant_horiz","3 x 15 a 20 movimento controlado","Intervalo 60\""),
     P("esteira_corrida","30 min · 120 a 140 bpm")
   ]},
-  {id:"t2", dia:"Terça", diaN:2, nome:"Costas e bíceps", full:"TREINO 2 - COSTAS E BICEPS", itens:[
+  {id:"t2", cod:"Treino 2", dia:"Terça", diaN:2, nome:"Costas e bíceps", full:"TREINO 2 - COSTAS E BICEPS", itens:[
     P("pulldown_corda","2 x 12 a 15 · aquecimento sem fadigar","Intervalo 45\""),
     P("remada_curvada","1\" pico de contração\n2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max reps","FD 60\" · TS 120 a 180\" · BO 90\""),
     P("puxada_neutra","2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max reps","FD 60\" · TS 120 a 180\" · BO 90\""),
@@ -368,7 +378,7 @@ const TREINOS = [
     P("rosca_45","Alternada\n2 x 10 a 12 (2 na reserva) · 1 x 10 a 12 máximas","Intervalo 90\""),
     P("bike","20 min · 120 a 140 bpm","Qualquer cardio que mantenha a frequência")
   ]},
-  {id:"t3", dia:"Quarta", diaN:3, nome:"Peito, ombro e tríceps", full:"TREINO 3 - PEITO, OMBRO E TRICEPS", itens:[
+  {id:"t3", cod:"Treino 3", dia:"Quarta", diaN:3, nome:"Peito, ombro e tríceps", full:"TREINO 3 - PEITO, OMBRO E TRICEPS", itens:[
     P("rot_ext","2 x 20 cada lado","Sem intervalo"),
     P("supino_30","1 x aquecimento 10 a 12 · 2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max reps","WU 45\" · FD 60\" · TS 120 a 180\" · BO 90\""),
     P("voador","1 x 10 a 12 (1\" e 2 na reserva) · 1 x 10 a 12 (1\" e máximas) · 1 x 10 a 12 máximas + 10\" rest + máximas","Intervalo 90\""),
@@ -379,7 +389,7 @@ const TREINOS = [
     P("abd_corda","3 x 15 a 20 máximas","Intervalo 60\""),
     P("esteira","20 min · 120 a 140 bpm")
   ]},
-  {id:"t4", dia:"Quinta", diaN:4, nome:"Perna", full:"TREINO 4 - PERNA", itens:[
+  {id:"t4", cod:"Treino 4", dia:"Quinta", diaN:4, nome:"Perna", full:"TREINO 4 - PERNA", itens:[
     P("abdutora","2 x 10 a 12 (1 na reserva) · 1 x 10 a 12 máximas","Intervalo 90\""),
     P("agacho_livre","2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max de reps","FD 60\" · TS 120 a 180\" · BO 90\""),
     P("leg45","2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max de reps","FD 60\" · TS 120 a 180\" · BO 90\""),
@@ -389,13 +399,13 @@ const TREINOS = [
     P("pant_horiz","3 x 15 (2\" máximas)","Intervalo 30\""),
     P("esteira","20 min · 120 a 140 bpm")
   ]},
-  {id:"t5", dia:"Sexta", diaN:5, nome:"OFF · Cardio, panturrilha e abdômen", full:"TREINO 5 - OFF - CARDIO PANTURRILHA E ABDOMEN", itens:[
+  {id:"t5", cod:"Treino 5", dia:"Sexta", diaN:5, nome:"OFF · Cardio, panturrilha e abdômen", full:"TREINO 5 - OFF - CARDIO PANTURRILHA E ABDOMEN", itens:[
     P("abd_corda","3 x 15 a 20 máximas","Intervalo 60\""),
     P("abd_infra","3 x 15 a 20 movimento controlado","Intervalo 60\""),
     P("pant_horiz","3 x 15 a 20 movimento controlado","Intervalo 60\""),
     P("esteira_corrida","30 min · 120 a 140 bpm")
   ]},
-  {id:"t6", dia:"Sábado", diaN:6, nome:"Upper", full:"TREINO 6 - UPPER", itens:[
+  {id:"t6", cod:"Treino 6", dia:"Sábado", diaN:6, nome:"Upper", full:"TREINO 6 - UPPER", itens:[
     P("rot_ext","2 x 20 cada lado","Sem intervalo"),
     P("remada_cavalinho","1\" pico de contração\n1 x aquecimento 12 a 15 · 2 x FD · 1 x TS 8 a 10 (1\" e máximas) · 1 x BO (1\" e máximo)","Referência da planilha: TS 55 kg / 10 rep max · BO 40 kg / 16 rep falha\nAquec. 45\" · FD 60\" · TS 120\" · BO 90\""),
     P("remada_banco45","1\" pico de contração\n2 x 10 a 12 (2 na reserva) · 1 x 10 a 12 máximas · 1 x 10 + drop","Referência: TS 32 kg / 10 rep · drop 26 e 22 kg / 10 rep cada\nIntervalo 90\""),
@@ -407,7 +417,7 @@ const TREINOS = [
     P("tri_frances_uni","3 x 10 a 12 (2 na reserva) · 1 x 10 a 12 máximas","Referência: TS 25 kg no cross pequeno. Execução ruim do lado direito\nIntervalo 90\""),
     P("esteira","20 min · 120 a 140 bpm")
   ]},
-  {id:"t7", dia:"Domingo", diaN:0, nome:"Perna", full:"TREINO 7 - PERNA", itens:[
+  {id:"t7", cod:"Treino 7", dia:"Domingo", diaN:0, nome:"Perna", full:"TREINO 7 - PERNA", itens:[
     P("abdutora","1 x aquecimento 12 a 15 · 2 x 10 a 12 (1 na reserva) · 1 x 10 a 12 máximas","Aquec. 45\" · Intervalo 90\""),
     P("elev_quadril","2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max de reps","FD 60\" · WS 90\" · TS 120 a 180\""),
     P("leg45_uni","2 x FD · 1 x TS 8 a 10 máximas · 1 x BO max de reps\nCada perna, começando pelo lado mais fraco","FD 60\" · WS 90\" · TS 120 a 180\"\nSubstitui o búlgaro no Smith (alavanca longa demais). Registrar a carga por perna."),
@@ -443,7 +453,7 @@ const store = {
   local(){ try{ return JSON.parse(localStorage.getItem(LS)||"{}"); }catch(e){ return {}; } },
   saveLocal(o){ try{ localStorage.setItem(LS, JSON.stringify(o)); }catch(e){} }
 };
-const state = { sessions:[], drafts:{}, metas:{}, wid:null, exSel:null, wkSel:null };
+const state = { sessions:[], drafts:{}, metas:{}, wid:null, data:null, exSel:null, wkSel:null };
 
 function setSync(on, txt){
   document.getElementById("dot").classList.toggle("on", !!on);
@@ -456,6 +466,7 @@ async function boot(){
   state.sessions = l.sessions || [];
   state.drafts   = l.drafts   || {};
   state.metas    = l.metas    || {};
+  state.wid      = l.wid      || null;
   pickInitialWorkout();
   renderAll();
 
@@ -478,7 +489,7 @@ async function boot(){
     renderAll();
   }catch(e){ setSync(false,"leitura falhou · usando local"); }
 }
-function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas}); }
+function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas, wid:state.wid}); }
 
 let draftTimers = {};
 function saveDraft(wid){
@@ -661,23 +672,21 @@ document.addEventListener("mousemove", e=>{
    ============================================================ */
 const $ = id=>document.getElementById(id);
 function pickInitialWorkout(){
-  const d=new Date().getDay();
-  const t=TREINOS.find(x=>x.diaN===d);
-  state.wid = state.wid || (t?t.id:"mob");
+  if(!state.wid || !TMAP[state.wid]) state.wid = "t1";
+  if(!state.data) state.data = hoje();
 }
 function draftOf(wid){ state.drafts[wid]=state.drafts[wid]||{}; return state.drafts[wid]; }
 function rowsOf(wid,exid){ const d=draftOf(wid); d[exid]=d[exid]||[]; return d[exid]; }
 
 function renderPicker(){
-  const dnow=new Date().getDay();
   $("picker").innerHTML = TREINOS.map(t=>{
     const on = t.id===state.wid;
-    const today = t.diaN===dnow;
     const d=draftOf(t.id), aberto=Object.keys(d).some(k=>(d[k]||[]).some(r=>num(r.w)>0||num(r.r)>0||r.t==="ok"));
-    return '<button type="button" data-w="'+t.id+'" aria-pressed="'+on+'" class="'+(today?"today":"")+'">'
-      +'<div class="d">'+(today?"hoje · ":"")+esc(t.dia)+'</div>'
-      +'<div class="n">'+esc(t.nome)+(aberto?' ●':'')+'</div></button>';
+    return '<button type="button" data-w="'+t.id+'" aria-pressed="'+on+'">'
+      +'<div class="d">'+esc(t.cod)+(aberto?' <span class="aberto">em aberto</span>':'')+'</div>'
+      +'<div class="n">'+esc(t.nome)+'</div></button>';
   }).join("");
+  const di=$("dataSessao"); if(di && di.value!==state.data) di.value=state.data;
 }
 
 function setRow(wid, exid, s, i){
@@ -785,7 +794,7 @@ function renderKpis(){
     {k:"Tonelagem", v:a.ton>=1000?fmt(a.ton/1000,1):fmt(a.ton,0), u:a.ton>=1000?"t":"kg"},
     {k:"Recordes em 30 dias", v:prs, u:"PR"}
   ]);
-  $("dockInfo").textContent = TMAP[state.wid].dia+" · "+TMAP[state.wid].nome;
+  $("dockInfo").textContent = TMAP[state.wid].cod+" · "+TMAP[state.wid].nome+" · "+dLabelFull(state.data||hoje());
 }
 
 /* ---------- EVOLUCAO ---------- */
@@ -881,7 +890,7 @@ function renderHist(){
       for(const st of s.entries[exid]){ if(isValid(exid,st)){ ser++; t+=num(st.w)*num(st.r); any=true; } }
       if(any) ex++; }
     return '<div class="sess"><div class="sess-d">'+dLabelFull(s.date)+'</div>'
-      +'<div><div class="sess-n">'+esc((TMAP[s.wid]||{nome:s.wid}).nome)+'</div>'
+      +'<div><div class="sess-n">'+esc((TMAP[s.wid]||{cod:s.wid}).cod||s.wid)+' · '+esc((TMAP[s.wid]||{nome:''}).nome||'')+'</div>'
       +'<div class="sess-m">'+ex+' exercícios · '+ser+' séries · '+fmt(t,0)+' kg</div></div>'
       +'<div class="sess-x"><button class="btn sm" data-del="'+s.id+'">Excluir</button></div></div>';
   }).join("");
@@ -893,7 +902,7 @@ function renderPlano(){
     +LEGENDA.map(l=>'<tr><td class="mono"><b>'+esc(l[0])+'</b></td><td>'+esc(l[1])+'</td><td class="name" style="white-space:normal">'+esc(l[2])+'</td></tr>').join("")+'</tbody>';
   $("planoBody").innerHTML = TREINOS.map(t=>
     '<div class="chart-card"><div class="chart-title">'+esc(t.full)+'</div>'
-    +'<div class="chart-sub">'+esc(t.dia)+' · '+t.itens.length+' exercícios</div>'
+    +'<div class="chart-sub">'+esc(t.cod)+' · sugestão de dia: '+esc(t.dia)+' · '+t.itens.length+' exercícios</div>'
     +'<div class="tblwrap"><table class="data"><thead><tr><th>#</th><th>Exercício</th><th>Grupo</th><th>Prescrição</th></tr></thead><tbody>'
     +t.itens.map((it,i)=>'<tr><td class="mono">'+(i+1)+'</td><td class="name">'+esc(EX[it.id].nome)+'</td><td>'+esc(GNOME[EX[it.id].grupo])+'</td><td class="name mono" style="font-size:12px">'+esc(it.presc).replace(/\n/g,"<br>")+(it.obs?'<br><span style="color:var(--muted)">'+esc(it.obs).replace(/\n/g,"<br>")+'</span>':"")+'</td></tr>').join("")
     +'</tbody></table></div></div>').join("");
@@ -915,7 +924,7 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
 
 $("picker").addEventListener("click", e=>{
   const b=e.target.closest("button[data-w]"); if(!b) return;
-  state.wid=b.dataset.w; renderPicker(); renderEx(); renderKpis();
+  state.wid=b.dataset.w; persistLocal(); renderPicker(); renderEx(); renderKpis();
 });
 
 function getRest(exid){
@@ -971,6 +980,14 @@ $("exlist").addEventListener("click", e=>{
   }
 });
 
+$("dataSessao").addEventListener("change", e=>{
+  state.data = e.target.value || hoje();
+  renderKpis();
+});
+$("btnHoje").addEventListener("click", ()=>{
+  state.data = hoje(); $("dataSessao").value = state.data; renderKpis();
+});
+
 $("volGrid").addEventListener("change", e=>{
   const t=e.target; if(!t.dataset.meta) return;
   state.metas[t.dataset.meta]=num(t.value); saveMetas(); renderVolume();
@@ -1004,7 +1021,7 @@ $("btnFinalizar").addEventListener("click", async ()=>{
     if(rows.length){ entries[exid]=rows; n+=rows.length; }
   }
   if(!n){ alert("Registre pelo menos uma série antes de finalizar."); return; }
-  const sess={date:hoje(), wid:state.wid, nome:TMAP[state.wid].nome, entries, finishedAt:new Date().toISOString()};
+  const sess={date:state.data||hoje(), wid:state.wid, nome:TMAP[state.wid].nome, entries, finishedAt:new Date().toISOString()};
   let id="local-"+Date.now();
   if(store.db){
     try{ const ref=await store.db.collection("sessions").add(sess); id=ref.id; }
@@ -1020,12 +1037,19 @@ $("btnFinalizar").addEventListener("click", async ()=>{
 });
 
 /* ---------- backup ---------- */
-$("btnExport").addEventListener("click", ()=>{
-  const blob = new Blob([JSON.stringify({app:"registro-de-carga", v:1, exportadoEm:new Date().toISOString(),
-    sessions:state.sessions, drafts:state.drafts, metas:state.metas}, null, 2)], {type:"application/json"});
+$("btnExport").addEventListener("click", async ()=>{
+  const json = JSON.stringify({app:"registro-de-carga", v:1, exportadoEm:new Date().toISOString(),
+    sessions:state.sessions, drafts:state.drafts, metas:state.metas}, null, 2);
+  const nome = "registro-de-carga-"+hoje()+".json";
+  try{
+    const dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null;
+    if(dl){ await dl.save({filename:nome, data:json}); return; }
+  }catch(err){
+    if(err && err.code==="declined") return;
+  }
   const a=document.createElement("a");
-  a.href=URL.createObjectURL(blob);
-  a.download="registro-de-carga-"+hoje()+".json";
+  a.href=URL.createObjectURL(new Blob([json],{type:"application/json"}));
+  a.download=nome;
   document.body.appendChild(a); a.click();
   setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 500);
 });
