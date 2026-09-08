@@ -1,0 +1,16 @@
+{
+  "name": "Registro de Carga",
+  "short_name": "Carga",
+  "description": "Registro de series, recordes e evolucao exercicio por exercicio.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f2f2ef",
+  "theme_color": "#184f95",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}
