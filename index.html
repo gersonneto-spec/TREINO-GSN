@@ -68,6 +68,8 @@ section.view.on{display:block}
 /* ---------- seletor de treino ---------- */
 .pickhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
 .datalbl{font-family:var(--f-disp);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto}
+.datalbl2{margin-left:6px}
+.acad{min-width:150px;font-family:var(--f-body);font-size:13.5px}
 .dataimp{background:var(--surface);border:1px solid var(--line-strong);border-radius:8px;padding:6px 9px;font-family:var(--f-mono);font-size:13px}
 .dataimp:focus{outline:2px solid var(--accent-line);outline-offset:-1px}
 .aberto{font-size:10px;letter-spacing:.04em;color:var(--pr);background:var(--pr-soft);border-radius:99px;padding:0 6px;text-transform:none}
@@ -117,14 +119,20 @@ select.si{text-align:left;font-family:var(--f-body);font-size:12.5px;padding:7px
 .btn.sm{padding:5px 10px;font-size:12.5px}
 .btn:focus-visible{outline:2px solid var(--accent-line);outline-offset:2px}
 .hint{font-size:12px;color:var(--muted)}
+.troca{margin-top:9px;border-top:1px dashed var(--line);padding-top:9px}
+.troca-lista{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{background:var(--surface-3);border:1px solid var(--line-strong);border-radius:99px;padding:5px 11px;font-size:12.5px;line-height:1.3}
+.chip:hover{background:var(--accent-soft);border-color:var(--accent)}
+.chip-on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:500}
+.tag.sub{border-color:#e3cf9a;color:var(--pr);background:var(--pr-soft)}
+.ex.trocado{box-shadow:inset 3px 0 0 var(--pr-fill)}
 .e1rm{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);text-align:center}
 .e1rm.pr{color:var(--pr);font-weight:600}
 
 /* ---------- barra fixa ---------- */
 .dock{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line-strong);z-index:50;box-shadow:0 -2px 14px rgba(20,22,24,.07)}
 .dock-in{max-width:1080px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.timer{font-family:var(--f-mono);font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;min-width:78px}
-.timer.zero{color:var(--good)}
+.dock-info{font-family:var(--f-disp);font-size:15px;font-weight:500;line-height:1.25}
 .dock-lbl{font-family:var(--f-disp);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .dock-sp{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
@@ -200,7 +208,10 @@ table.data tr:last-child td{border-bottom:0}
     <div class="strip" id="kpis"></div>
     <div class="pickhead">
       <span class="eyebrow">Escolha o treino</span>
-      <label class="datalbl" for="dataSessao">Data</label>
+      <label class="datalbl" for="academia">Academia</label>
+      <input type="text" id="academia" class="dataimp acad" list="listaAcademias" placeholder="onde voc&ecirc; treinou" autocomplete="off">
+      <datalist id="listaAcademias"></datalist>
+      <label class="datalbl datalbl2" for="dataSessao">Data</label>
       <input type="date" id="dataSessao" class="dataimp">
       <button class="btn sm" id="btnHoje">Hoje</button>
     </div>
@@ -264,14 +275,10 @@ table.data tr:last-child td{border-bottom:0}
 <div class="dock" id="dock">
   <div class="dock-in">
     <div>
-      <div class="dock-lbl">Descanso</div>
-      <div class="timer" id="timer">0:00</div>
+      <div class="dock-lbl">Sess&atilde;o</div>
+      <div class="dock-info" id="dockInfo"></div>
     </div>
-    <button class="btn sm" id="tMinus">&minus;15s</button>
-    <button class="btn sm" id="tPlus">+15s</button>
-    <button class="btn sm" id="tStop">Zerar</button>
     <div class="dock-sp">
-      <span class="hint" id="dockInfo"></span>
       <button class="btn" id="btnDescartar">Descartar</button>
       <button class="btn pri" id="btnFinalizar">Finalizar treino</button>
     </div>
@@ -430,6 +437,51 @@ const TREINOS = [
 ];
 const TMAP = Object.fromEntries(TREINOS.map(t=>[t.id,t]));
 
+/* ============================================================
+   2b. TROCAS EQUIVALENTES  (mesmo estímulo, outro equipamento)
+   ============================================================ */
+const ALT = {};
+function alt(orig, lista){
+  ALT[orig] = lista.map(a=>{ if(!EX[a[0]]) ex(a[0], a[1], a[2], a[3]); return a[0]; });
+}
+alt("abd_corda",[["abd_maquina","Abdominal máquina","core"],["abd_declinado","Abdominal no banco declinado","core"],["abd_infra","Abdominal infra na paralela","core"]]);
+alt("abd_infra",[["elev_pernas_susp","Elevação de pernas suspenso","core"],["abd_infra_banco","Abdominal infra no banco","core"],["canivete","Canivete","core"]]);
+alt("pant_horiz",[["pant_leg45","Panturrilha no leg 45","panturrilha"],["pant_pe","Panturrilha em pé máquina","panturrilha"],["pant_sentada","Panturrilha sentada","panturrilha"]]);
+alt("esteira",[["eliptico","Elíptico","cardio","cardio"],["escada","Escada / transport","cardio","cardio"],["bike","Bicicleta","cardio","cardio"]]);
+alt("esteira_corrida",[["eliptico","Elíptico","cardio","cardio"],["escada","Escada / transport","cardio","cardio"],["bike","Bicicleta","cardio","cardio"]]);
+alt("bike",[["eliptico","Elíptico","cardio","cardio"],["escada","Escada / transport","cardio","cardio"],["esteira","Esteira","cardio","cardio"]]);
+alt("pulldown_corda",[["pulldown_barra","Pulldown barra reta","costas","prep"],["remada_baixa_leve","Remada baixa leve","costas","prep"]]);
+alt("remada_curvada",[["remada_curvada_halter","Remada curvada com halteres","costas"],["remada_cavalinho","Remada cavalinho livre","costas"],["remada_maquina_neutra","Remada máquina pegada neutra","costas"],["remada_smith","Remada curvada no Smith","costas"]]);
+alt("puxada_neutra",[["puxada_pronada","Puxada pegada aberta pronada","costas"],["puxada_supinada","Puxada supinada","costas"],["pulldown_maquina","Pulldown na máquina","costas"]]);
+alt("remada_baixa_neutra",[["remada_baixa_pronada","Remada baixa pronada","costas"],["remada_maquina_neutra","Remada máquina pegada neutra","costas"],["remada_cavalinho","Remada cavalinho livre","costas"]]);
+alt("banco_romano",[["extensao_lombar_maq","Extensão lombar na máquina","posterior"],["stiff_halter","Stiff com halteres","posterior"]]);
+alt("dc_stretch",[["along_dorsal_barra","Alongamento de dorsal na barra","costas","along"],["pullover_polia","Pullover alongado na polia","costas","along"]]);
+alt("cruc_inv_polia",[["peck_deck_inv","Crucifixo inverso máquina","ombro"],["cruc_inv_halter","Crucifixo inverso halteres no banco 45","ombro"],["face_pull","Face pull","ombro"]]);
+alt("rosca_45",[["rosca_alternada","Rosca alternada em pé","biceps"],["rosca_scott","Rosca scott","biceps"],["rosca_martelo","Rosca martelo","biceps"]]);
+alt("rot_ext",[["rot_ext_elastico","Rotação externa com elástico","ombro","prep"],["face_pull_leve","Face pull leve","ombro","prep"]]);
+alt("supino_30",[["supino_incl_maquina","Supino inclinado máquina","peito"],["supino_incl_smith","Supino inclinado no Smith","peito"],["supino_incl_barra","Supino inclinado barra","peito"]]);
+alt("voador",[["cruc_halter_reto","Crucifixo com halteres no banco reto","peito"],["cruc_polia_media","Crucifixo polia média","peito"],["peck_deck","Peck deck","peito"]]);
+alt("cruc_polia_alta",[["cruc_polia_media","Crucifixo polia média","peito"],["voador","Voador","peito"],["cruc_declinado_halter","Crucifixo declinado com halteres","peito"]]);
+alt("cruc_polia_baixa",[["cruc_polia_media","Crucifixo polia média","peito"],["voador","Voador","peito"],["cruc_halter_reto","Crucifixo com halteres no banco reto","peito"]]);
+alt("abd_ombro_uni",[["elev_lateral_uni","Elevação lateral halter unilateral","ombro"],["elev_lateral_maq","Elevação lateral máquina","ombro"]]);
+alt("abd_ombro_halter",[["elev_lateral_maq","Elevação lateral máquina","ombro"],["abd_ombro_uni","Abdução de ombro uni no cross","ombro"],["elev_lateral_incl","Elevação lateral no banco inclinado","ombro"]]);
+alt("tri_corda",[["tri_barra_polia","Tríceps barra reta na polia","triceps"],["tri_testa","Tríceps testa","triceps"],["tri_frances_uni","Tríceps francês uni no cross","triceps"]]);
+alt("tri_frances_uni",[["tri_testa_halter","Tríceps testa com halteres","triceps"],["tri_frances_bi","Tríceps francês bilateral","triceps"],["tri_corda","Tríceps corda cross","triceps"]]);
+alt("abdutora",[["abdutora_reto","Abdutora sentado tronco reto","gluteo"],["abducao_cross","Abdução no cross com caneleira","gluteo"]]);
+alt("agacho_livre",[["agacho_smith","Agachamento no Smith","quadriceps"],["hack","Hack machine","quadriceps"],["leg45","Leg 45","quadriceps"],["agacho_maquina","Agachamento na máquina","quadriceps"]]);
+alt("leg45",[["hack","Hack machine","quadriceps"],["agacho_maquina","Agachamento na máquina","quadriceps"],["leg_horizontal","Leg press horizontal","quadriceps"]]);
+alt("leg45_uni",[["leg_horizontal_uni","Leg press horizontal unilateral","quadriceps"],["hack_uni","Hack machine unilateral","quadriceps"],["passada_smith","Passada no Smith","quadriceps"]]);
+alt("banco_extensor",[["extensora_uni","Cadeira extensora unilateral","quadriceps"],["extensora_maq2","Extensora em outra máquina","quadriceps"]]);
+alt("banco_flexor",[["mesa_flexora","Mesa flexora","posterior"],["flexora_em_pe","Flexora em pé","posterior"],["stiff_halter","Stiff com halteres","posterior"]]);
+alt("mesa_flexora",[["banco_flexor","Banco flexor","posterior"],["flexora_em_pe","Flexora em pé","posterior"],["stiff_halter","Stiff com halteres","posterior"]]);
+alt("remada_cavalinho",[["remada_curvada","Remada curvada barra","costas"],["remada_maquina_neutra","Remada máquina pegada neutra","costas"],["remada_baixa_neutra","Remada baixa neutra","costas"]]);
+alt("remada_banco45",[["remada_halter_uni","Remada halter unilateral no banco","costas"],["remada_maquina_peito","Remada máquina apoiada no peito","costas"]]);
+alt("supino_smith",[["supino_reto_barra","Supino reto barra","peito"],["supino_maquina","Supino reto máquina","peito"],["supino_halter","Supino reto halteres","peito"]]);
+alt("desenv_maquina",[["desenv_halter","Desenvolvimento halteres","ombro"],["desenv_smith","Desenvolvimento no Smith","ombro"],["desenv_arnold","Desenvolvimento Arnold","ombro"]]);
+alt("rosca_bayesian",[["rosca_incl_halter","Rosca inclinada halter","biceps"],["rosca_scott","Rosca scott","biceps"],["rosca_concentrada","Rosca concentrada","biceps"]]);
+alt("elev_quadril",[["elev_quadril_barra","Elevação de quadril com barra","gluteo"],["gluteo_maquina","Glúteo na máquina","gluteo"],["ponte_smith","Ponte no Smith","gluteo"]]);
+
+
 const LEGENDA = [
   ["FD","Feeder set","Série leve de aproximação, sem falha. Intervalo curto (60\")."],
   ["TS","Top set","Série principal, carga máxima do dia, 8 a 10 reps até a falha técnica."],
@@ -453,7 +505,7 @@ const store = {
   local(){ try{ return JSON.parse(localStorage.getItem(LS)||"{}"); }catch(e){ return {}; } },
   saveLocal(o){ try{ localStorage.setItem(LS, JSON.stringify(o)); }catch(e){} }
 };
-const state = { sessions:[], drafts:{}, metas:{}, wid:null, data:null, exSel:null, wkSel:null };
+const state = { sessions:[], drafts:{}, metas:{}, swaps:{}, openSwap:null, wid:null, data:null, local:"", exSel:null, wkSel:null };
 
 function setSync(on, txt){
   document.getElementById("dot").classList.toggle("on", !!on);
@@ -467,6 +519,8 @@ async function boot(){
   state.drafts   = l.drafts   || {};
   state.metas    = l.metas    || {};
   state.wid      = l.wid      || null;
+  state.local    = l.local    || "";
+  state.swaps    = l.swaps    || {};
   pickInitialWorkout();
   renderAll();
 
@@ -489,7 +543,7 @@ async function boot(){
     renderAll();
   }catch(e){ setSync(false,"leitura falhou · usando local"); }
 }
-function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas, wid:state.wid}); }
+function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas, swaps:state.swaps, wid:state.wid, local:state.local}); }
 
 let draftTimers = {};
 function saveDraft(wid){
@@ -528,7 +582,7 @@ function allSets(){
   for(const s of state.sessions){
     for(const exid in (s.entries||{})){
       (s.entries[exid]||[]).forEach((st,i)=>{
-        out.push({date:s.date, wid:s.wid, exid, i, w:num(st.w), r:num(st.r), rir:st.rir, t:st.t, valid:isValid(exid,st)});
+        out.push({date:s.date, local:s.local||"", wid:s.wid, exid, i, w:num(st.w), r:num(st.r), rir:st.rir, t:st.t, valid:isValid(exid,st)});
       });
     }
   }
@@ -560,7 +614,7 @@ function lastOf(exid, exceptDraft){
   if(!list.length) return null;
   const d = list[list.length-1].date;
   const sets = list.filter(s=>s.date===d);
-  return {date:d, sets};
+  return {date:d, local:(sets[0]&&sets[0].local)||"", sets};
 }
 /* semana ISO (segunda a domingo) */
 function weekKey(iso){
@@ -687,6 +741,9 @@ function renderPicker(){
       +'<div class="n">'+esc(t.nome)+'</div></button>';
   }).join("");
   const di=$("dataSessao"); if(di && di.value!==state.data) di.value=state.data;
+  const ai=$("academia"); if(ai && ai.value!==state.local) ai.value=state.local||"";
+  const nomes=[...new Set(state.sessions.map(x=>x.local).filter(Boolean))].sort();
+  $("listaAcademias").innerHTML = nomes.map(n=>'<option value="'+esc(n)+'"></option>').join("");
 }
 
 function setRow(wid, exid, s, i){
@@ -711,44 +768,64 @@ function setRow(wid, exid, s, i){
     +'<td class="n"><button class="rm" data-rm="'+exid+'" data-i="'+i+'" aria-label="remover">&times;</button></td></tr>';
 }
 
+function swapsOf(wid){ state.swaps[wid]=state.swaps[wid]||{}; return state.swaps[wid]; }
+function usedId(wid, origId){ return swapsOf(wid)[origId] || origId; }
+
 function renderEx(){
   const t=TMAP[state.wid];
   const out=[];
   t.itens.forEach((it,idx)=>{
-    const e=EX[it.id];
-    const rows=rowsOf(state.wid,it.id);
+    const uid = usedId(state.wid, it.id);
+    const e=EX[uid] || EX[it.id];
+    const trocado = uid!==it.id;
+    const rows=rowsOf(state.wid,uid);
     if(!rows.length && (e.tipo==="carga"||e.tipo==="prep"||e.tipo==="cardio")) rows.push({w:"",r:"",rir:"",t:""});
-    const pr=prOf(it.id);
-    const lt=lastOf(it.id);
+    const pr=prOf(uid);
+    const lt=lastOf(uid);
     let right="";
     if(e.tipo==="carga"){
       right = lt
-        ? '<div class="last">última · '+dLabel(lt.date)+'<br>'+lt.sets.map(s=>'<b>'+fmt(s.w,s.w%1?1:0)+'</b>×'+s.r).join(" · ")+'</div>'
+        ? '<div class="last">última · '+dLabel(lt.date)+(lt.local?' · '+esc(lt.local):'')+'<br>'+lt.sets.map(s=>'<b>'+fmt(s.w,s.w%1?1:0)+'</b>×'+s.r).join(" · ")+'</div>'
         : '<div class="last">sem registro ainda</div>';
       if(pr) right += '<div class="pr-badge">PR '+fmt(pr.e,1)+' kg · '+fmt(pr.w,pr.w%1?1:0)+'×'+pr.r+'</div>';
+    }
+    const opcoes = ALT[it.id] || [];
+    let troca = "";
+    if(opcoes.length){
+      const aberto = state.openSwap===it.id;
+      troca = '<div class="troca">'
+        +'<button class="btn sm troca-b" data-swap="'+it.id+'" aria-expanded="'+aberto+'">'+(aberto?"Fechar":"Trocar exercício")+'</button>'
+        +(aberto
+          ? '<div class="troca-lista">'
+            +(trocado?'<button class="chip chip-on" data-use="'+it.id+'|'+it.id+'">← '+esc(EX[it.id].nome)+' (original)</button>':'')
+            +opcoes.filter(o=>o!==uid).map(o=>'<button class="chip" data-use="'+it.id+'|'+o+'">'+esc(EX[o].nome)+'</button>').join("")
+            +'</div>'
+          : '')
+        +'</div>';
     }
     let body="";
     if(e.tipo==="mob"||e.tipo==="along"){
       const done = rows.length>0;
       body='<div class="sets"><div class="row-actions">'
-        +'<button class="btn '+(done?"pri":"")+'" data-done="'+it.id+'">'+(done?"✓ Feito":"Marcar como feito")+'</button>'
-        +'<span class="hint">Não entra no volume de séries.</span></div></div>';
+        +'<button class="btn '+(done?"pri":"")+'" data-done="'+uid+'">'+(done?"✓ Feito":"Marcar como feito")+'</button>'
+        +'<span class="hint">Não entra no volume de séries.</span></div>'+troca+'</div>';
     } else {
       const head = e.tipo==="cardio"
         ? '<colgroup><col class="c-x"><col class="c-mn"><col class="c-bp"><col><col class="c-x"></colgroup><thead><tr><th class="n">#</th><th>min</th><th>bpm</th><th>obs.</th><th class="n"></th></tr></thead>'
         : '<colgroup><col class="c-x"><col class="c-kg"><col class="c-rp"><col class="c-ri"><col class="c-tc"><col class="c-e1"><col class="c-x"></colgroup><thead><tr><th class="n">#</th><th>kg</th><th>reps</th><th>RIR</th><th>técnica</th><th style="text-align:center">1RM est.</th><th class="n"></th></tr></thead>';
       body='<div class="sets"><div class="tblwrap"><table class="st">'+head+'<tbody>'
-        +rows.map((s,i)=>setRow(state.wid,it.id,s,i)).join("")
+        +rows.map((s,i)=>setRow(state.wid,uid,s,i)).join("")
         +'</tbody></table></div><div class="row-actions">'
-        +'<button class="btn sm" data-add="'+it.id+'">+ série</button>'
-        +(e.tipo==="carga"&&lt?'<button class="btn sm" data-rep="'+it.id+'">Repetir última sessão</button>':"")
+        +'<button class="btn sm" data-add="'+uid+'">+ série</button>'
+        +(e.tipo==="carga"&&lt?'<button class="btn sm" data-rep="'+uid+'">Repetir última sessão</button>':"")
         +'<span class="hint">'+(e.tipo==="prep"?"Preparo · não conta no volume":"")+'</span>'
-        +'</div></div>';
+        +'</div>'+troca+'</div>';
     }
-    out.push('<article class="ex '+(e.tipo==="cardio"?"cardio":(e.tipo==="mob"||e.tipo==="along"?"mob":""))+'">'
+    out.push('<article class="ex '+(e.tipo==="cardio"?"cardio":(e.tipo==="mob"||e.tipo==="along"?"mob":""))+(trocado?" trocado":"")+'">'
       +'<div class="ex-head"><div class="ex-idx">'+String(idx+1).padStart(2,"0")+'</div>'
       +'<div style="min-width:0"><h3 class="ex-name">'+esc(e.nome)+'</h3>'
       +'<div class="ex-tags"><span class="tag grp">'+esc(GNOME[e.grupo]||e.grupo)+'</span>'
+      +(trocado?'<span class="tag sub">no lugar de '+esc(EX[it.id].nome)+'</span>':"")
       +(e.tipo==="prep"?'<span class="tag">preparo</span>':"")
       +(e.tipo==="along"?'<span class="tag">alongamento</span>':"")
       +(e.tipo==="cardio"?'<span class="tag">cardio</span>':"")+'</div>'
@@ -794,7 +871,7 @@ function renderKpis(){
     {k:"Tonelagem", v:a.ton>=1000?fmt(a.ton/1000,1):fmt(a.ton,0), u:a.ton>=1000?"t":"kg"},
     {k:"Recordes em 30 dias", v:prs, u:"PR"}
   ]);
-  $("dockInfo").textContent = TMAP[state.wid].cod+" · "+TMAP[state.wid].nome+" · "+dLabelFull(state.data||hoje());
+  $("dockInfo").textContent = TMAP[state.wid].cod+" · "+dLabelFull(state.data||hoje())+(state.local?" · "+state.local:"");
 }
 
 /* ---------- EVOLUCAO ---------- */
@@ -891,7 +968,7 @@ function renderHist(){
       if(any) ex++; }
     return '<div class="sess"><div class="sess-d">'+dLabelFull(s.date)+'</div>'
       +'<div><div class="sess-n">'+esc((TMAP[s.wid]||{cod:s.wid}).cod||s.wid)+' · '+esc((TMAP[s.wid]||{nome:''}).nome||'')+'</div>'
-      +'<div class="sess-m">'+ex+' exercícios · '+ser+' séries · '+fmt(t,0)+' kg</div></div>'
+      +'<div class="sess-m">'+(s.local?esc(s.local)+' · ':'')+ex+' exercícios · '+ser+' séries · '+fmt(t,0)+' kg</div></div>'
       +'<div class="sess-x"><button class="btn sm" data-del="'+s.id+'">Excluir</button></div></div>';
   }).join("");
 }
@@ -927,15 +1004,6 @@ $("picker").addEventListener("click", e=>{
   state.wid=b.dataset.w; persistLocal(); renderPicker(); renderEx(); renderKpis();
 });
 
-function getRest(exid){
-  const it=TMAP[state.wid].itens.find(x=>x.id===exid);
-  const txt=((it&&it.obs)||"")+" "+((it&&it.presc)||"");
-  let m=txt.match(/Intervalo\s+(\d+)/i); if(m) return +m[1];
-  m=txt.match(/TS\s*(\d+)/); if(m) return +m[1];
-  if(/FD/.test(txt)) return 90;
-  return 90;
-}
-
 $("exlist").addEventListener("input", e=>{
   const t=e.target; if(!t.dataset || !t.dataset.f) return;
   const rows=rowsOf(state.wid, t.dataset.e), i=+t.dataset.i;
@@ -953,7 +1021,6 @@ $("exlist").addEventListener("input", e=>{
 });
 $("exlist").addEventListener("change", e=>{
   const t=e.target;
-  if(t.dataset && t.dataset.f==="r" && num(t.value)>0 && EX[t.dataset.e].tipo!=="cardio") startTimer(getRest(t.dataset.e));
   if(t.dataset && t.dataset.f==="t"){ renderEx(); }
 });
 $("exlist").addEventListener("click", e=>{
@@ -977,9 +1044,27 @@ $("exlist").addEventListener("click", e=>{
     const rows=rowsOf(state.wid, dn.dataset.done);
     if(rows.length) rows.length=0; else rows.push({t:"ok"});
     saveDraft(state.wid); renderEx(); renderPicker();
+    return;
+  }
+  const sw=e.target.closest("[data-swap]"), us=e.target.closest("[data-use]");
+  if(sw){
+    state.openSwap = (state.openSwap===sw.dataset.swap) ? null : sw.dataset.swap;
+    renderEx();
+  } else if(us){
+    const [orig,novo]=us.dataset.use.split("|");
+    const antigo=usedId(state.wid,orig);
+    const rows=rowsOf(state.wid,antigo);
+    const temDado=rows.some(r=>num(r.w)>0||num(r.r)>0||r.t==="ok");
+    if(temDado && !confirm("As séries digitadas em "+EX[antigo].nome+" ficam guardadas nele. Trocar mesmo assim?")) return;
+    if(novo===orig) delete swapsOf(state.wid)[orig]; else swapsOf(state.wid)[orig]=novo;
+    state.openSwap=null;
+    persistLocal(); saveDraft(state.wid); renderEx(); renderPicker();
   }
 });
 
+$("academia").addEventListener("input", e=>{
+  state.local = e.target.value.trim(); persistLocal(); renderKpis();
+});
 $("dataSessao").addEventListener("change", e=>{
   state.data = e.target.value || hoje();
   renderKpis();
@@ -1021,7 +1106,7 @@ $("btnFinalizar").addEventListener("click", async ()=>{
     if(rows.length){ entries[exid]=rows; n+=rows.length; }
   }
   if(!n){ alert("Registre pelo menos uma série antes de finalizar."); return; }
-  const sess={date:state.data||hoje(), wid:state.wid, nome:TMAP[state.wid].nome, entries, finishedAt:new Date().toISOString()};
+  const sess={date:state.data||hoje(), wid:state.wid, nome:TMAP[state.wid].nome, local:state.local||"", entries, finishedAt:new Date().toISOString()};
   let id="local-"+Date.now();
   if(store.db){
     try{ const ref=await store.db.collection("sessions").add(sess); id=ref.id; }
@@ -1031,7 +1116,6 @@ $("btnFinalizar").addEventListener("click", async ()=>{
   state.drafts[state.wid]={};
   persistLocal();
   if(store.db){ try{ await store.db.doc("drafts/"+state.wid).delete(); }catch(e){} }
-  stopTimer();
   renderAll();
   alert("Treino salvo · "+n+" séries registradas.");
 });
@@ -1071,29 +1155,6 @@ $("fileImport").addEventListener("change", async e=>{
   renderAll();
   alert(novas.length+" sessão(ões) importada(s).");
 });
-
-/* ---------- cronometro ---------- */
-let tLeft=0, tId=null;
-function paint(){
-  const m=Math.floor(Math.max(tLeft,0)/60), s=Math.max(tLeft,0)%60;
-  const el=$("timer");
-  el.textContent = m+":"+String(s).padStart(2,"0");
-  el.classList.toggle("zero", tLeft<=0);
-}
-function startTimer(sec){ tLeft=sec; if(tId) clearInterval(tId);
-  tId=setInterval(()=>{ tLeft--; paint(); if(tLeft<=0){ clearInterval(tId); tId=null; beep(); } },1000); paint(); }
-function stopTimer(){ if(tId) clearInterval(tId); tId=null; tLeft=0; paint(); }
-function beep(){
-  try{ const C=window.AudioContext||window.webkitAudioContext; if(!C) return;
-    const a=new C(), o=a.createOscillator(), g=a.createGain();
-    o.connect(g); g.connect(a.destination); o.frequency.value=880; g.gain.value=0.12;
-    o.start(); setTimeout(()=>{o.stop(); a.close();},260);
-  }catch(e){}
-}
-$("tPlus").addEventListener("click",()=>{ tLeft+=15; if(!tId) startTimer(tLeft); else paint(); });
-$("tMinus").addEventListener("click",()=>{ tLeft=Math.max(0,tLeft-15); paint(); });
-$("tStop").addEventListener("click", stopTimer);
-paint();
 
 boot();
 </script>
