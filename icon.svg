@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Registro de Carga">
+  <rect width="512" height="512" rx="96" fill="#184f95"/>
+  <g fill="none" stroke="#ffffff" stroke-width="26" stroke-linecap="round">
+    <line x1="128" y1="256" x2="384" y2="256"/>
+  </g>
+  <g fill="#ffffff">
+    <rect x="96" y="196" width="34" height="120" rx="10"/>
+    <rect x="52" y="222" width="30" height="68" rx="9"/>
+    <rect x="382" y="196" width="34" height="120" rx="10"/>
+    <rect x="430" y="222" width="30" height="68" rx="9"/>
+  </g>
+  <polyline points="150,392 214,352 278,368 342,300" fill="none" stroke="#eda100" stroke-width="20" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="342" cy="300" r="16" fill="#eda100"/>
+</svg>
