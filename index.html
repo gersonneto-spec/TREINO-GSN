@@ -66,20 +66,63 @@ section.view.on{display:block}
 .kpi .u{font-size:13px;color:var(--ink-2);font-family:var(--f-body);font-weight:400}
 
 /* ---------- seletor de treino ---------- */
-.pickhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.datalbl{font-family:var(--f-disp);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-left:auto}
-.datalbl2{margin-left:6px}
-.acad{min-width:150px;font-family:var(--f-body);font-size:13.5px}
-.dataimp{background:var(--surface);border:1px solid var(--line-strong);border-radius:8px;padding:6px 9px;font-family:var(--f-mono);font-size:13px}
-.dataimp:focus{outline:2px solid var(--accent-line);outline-offset:-1px}
-.aberto{font-size:10px;letter-spacing:.04em;color:var(--pr);background:var(--pr-soft);border-radius:99px;padding:0 6px;text-transform:none}
-.picker{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;flex-wrap:nowrap}
-@media (min-width:780px){.picker{flex-wrap:wrap;overflow:visible}.picker button{flex:1 1 158px}}
-.picker button{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 12px;text-align:left;min-width:132px;line-height:1.25}
-.picker button .d{font-family:var(--f-disp);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.picker button .n{font-size:13px;font-weight:500}
-.picker button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
-.picker button.today .d{color:var(--accent)}
+/* ---------- barra da sessao ---------- */
+.sesbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.selbtn{flex:1 1 260px;display:flex;align-items:baseline;gap:9px;background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:9px 12px;text-align:left;min-width:0}
+.selbtn:hover{border-color:var(--accent)}
+.selbtn:focus-visible{outline:2px solid var(--accent-line);outline-offset:2px}
+.selcod{font-family:var(--f-disp);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);white-space:nowrap}
+.selnome{font-size:14px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.selseta{margin-left:auto;color:var(--muted);font-size:12px}
+.campo{background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:8px 10px;font-family:var(--f-mono);font-size:13px}
+.campo:focus{outline:2px solid var(--accent-line);outline-offset:-1px}
+.acad{min-width:130px;flex:0 1 170px;font-family:var(--f-body);font-size:13.5px}
+
+/* ---------- lista de treinos ---------- */
+.lista{list-style:none;margin:0 0 12px;padding:0;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+.lista li+li{border-top:1px solid var(--line)}
+.lista button{width:100%;display:flex;align-items:center;gap:10px;background:none;border:0;padding:11px 14px;text-align:left}
+.lista button:hover{background:var(--surface-3)}
+.lista .lcod{font-family:var(--f-disp);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);min-width:78px}
+.lista .lnome{font-size:14px;font-weight:500;flex:1;min-width:0}
+.lista .lqtd{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);white-space:nowrap}
+.lista button[aria-current="true"]{background:var(--accent-soft)}
+.lista button[aria-current="true"] .lcod{color:var(--accent)}
+.aberto{font-size:10px;letter-spacing:.04em;color:var(--pr);background:var(--pr-soft);border:1px solid #e3cf9a;border-radius:99px;padding:1px 7px;text-transform:none;font-family:var(--f-body)}
+
+/* ---------- progresso da sessao ---------- */
+.progresso{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-family:var(--f-mono);font-size:12px;color:var(--ink-2)}
+.pbar{flex:1;height:6px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.pfill{height:100%;background:var(--good);border-radius:99px;transition:width .2s}
+
+/* ---------- exercicio concluido ---------- */
+.ex.feito{background:var(--surface-3)}
+.ex-feito{display:flex;align-items:center;gap:11px;padding:10px 14px;width:100%;text-align:left;background:none;border:0}
+.ex-feito:hover{background:var(--surface-2)}
+.tick{width:20px;height:20px;border-radius:50%;background:var(--good);color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fnome{font-family:var(--f-disp);font-size:15px;font-weight:500;flex-shrink:0}
+.fres{font-family:var(--f-mono);font-size:12px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.freab{margin-left:auto;font-size:11.5px;color:var(--muted);white-space:nowrap}
+
+/* ---------- editor do treino ---------- */
+.editor{background:var(--surface);border:1px solid var(--accent);border-radius:10px;padding:14px;margin-bottom:12px}
+.ed-head{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:11px}
+.ed-tit{font-family:var(--f-disp);font-size:16px;font-weight:600}
+.ed-sp{margin-left:auto;display:flex;gap:7px}
+.ed-row{display:flex;gap:8px;align-items:flex-start;padding:9px 0;border-top:1px solid var(--line)}
+.ed-ord{display:flex;flex-direction:column;gap:2px}
+.ed-ord button{background:var(--surface-3);border:1px solid var(--line-strong);border-radius:5px;width:26px;height:19px;font-size:10px;line-height:1;color:var(--ink-2)}
+.ed-ord button:hover:not(:disabled){background:var(--accent-soft);border-color:var(--accent)}
+.ed-ord button:disabled{opacity:.35}
+.ed-corpo{flex:1;min-width:0}
+.ed-nome{font-family:var(--f-disp);font-size:15px;font-weight:500}
+.ed-presc{width:100%;margin-top:5px;background:var(--surface-3);border:1px solid var(--line-strong);border-radius:7px;padding:6px 8px;font-family:var(--f-mono);font-size:12px;line-height:1.45;resize:vertical;min-height:70px}
+.ed-presc:focus{outline:2px solid var(--accent-line);outline-offset:-1px;background:#fff}
+.ed-del{background:none;border:1px solid var(--line-strong);border-radius:7px;color:var(--muted);font-size:16px;line-height:1;padding:4px 9px;align-self:center}
+.ed-del:hover{color:var(--down);border-color:var(--down)}
+.ed-add{border-top:2px solid var(--line-strong);margin-top:10px;padding-top:11px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ed-add select,.ed-add input{background:var(--surface-3);border:1px solid var(--line-strong);border-radius:7px;padding:7px 9px;font-size:13px}
+.ed-add select{max-width:100%}
 
 /* ---------- exercicio ---------- */
 .exlist{display:flex;flex-direction:column;gap:10px}
@@ -206,16 +249,21 @@ table.data tr:last-child td{border-bottom:0}
   <!-- ============ TREINO ============ -->
   <section class="view on" id="v-treino" role="tabpanel" aria-labelledby="tab-treino">
     <div class="strip" id="kpis"></div>
-    <div class="pickhead">
-      <span class="eyebrow">Escolha o treino</span>
-      <label class="datalbl" for="academia">Academia</label>
-      <input type="text" id="academia" class="dataimp acad" list="listaAcademias" placeholder="onde voc&ecirc; treinou" autocomplete="off">
+    <div class="sesbar">
+      <button type="button" class="selbtn" id="selTreino" aria-expanded="false">
+        <span class="selcod" id="selCod">Treino 1</span>
+        <span class="selnome" id="selNome">&mdash;</span>
+        <span class="selseta" aria-hidden="true">&#9662;</span>
+      </button>
+      <input type="text" id="academia" class="campo acad" list="listaAcademias" placeholder="Academia" autocomplete="off">
       <datalist id="listaAcademias"></datalist>
-      <label class="datalbl datalbl2" for="dataSessao">Data</label>
-      <input type="date" id="dataSessao" class="dataimp">
+      <input type="date" id="dataSessao" class="campo">
       <button class="btn sm" id="btnHoje">Hoje</button>
+      <button class="btn sm" id="btnEditar">Editar treino</button>
     </div>
-    <div class="picker" id="picker"></div>
+    <ul class="lista" id="picker" hidden></ul>
+    <div class="editor" id="editor" hidden></div>
+    <div class="progresso" id="progresso"></div>
     <div id="exlist" class="exlist"></div>
   </section>
 
@@ -505,7 +553,7 @@ const store = {
   local(){ try{ return JSON.parse(localStorage.getItem(LS)||"{}"); }catch(e){ return {}; } },
   saveLocal(o){ try{ localStorage.setItem(LS, JSON.stringify(o)); }catch(e){} }
 };
-const state = { sessions:[], drafts:{}, metas:{}, swaps:{}, openSwap:null, wid:null, data:null, local:"", exSel:null, wkSel:null };
+const state = { sessions:[], drafts:{}, metas:{}, swaps:{}, plano:{}, custom:{}, feito:{}, openSwap:null, editando:false, listaAberta:false, wid:null, data:null, local:"", exSel:null, wkSel:null };
 
 function setSync(on, txt){
   document.getElementById("dot").classList.toggle("on", !!on);
@@ -521,6 +569,10 @@ async function boot(){
   state.wid      = l.wid      || null;
   state.local    = l.local    || "";
   state.swaps    = l.swaps    || {};
+  state.plano    = l.plano    || {};
+  state.custom   = l.custom   || {};
+  state.feito    = l.feito    || {};
+  for(const id in state.custom){ const c=state.custom[id]; if(!EX[id]) ex(id, c.nome, c.grupo, c.tipo); }
   pickInitialWorkout();
   renderAll();
 
@@ -543,7 +595,7 @@ async function boot(){
     renderAll();
   }catch(e){ setSync(false,"leitura falhou · usando local"); }
 }
-function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas, swaps:state.swaps, wid:state.wid, local:state.local}); }
+function persistLocal(){ store.saveLocal({sessions:state.sessions, drafts:state.drafts, metas:state.metas, swaps:state.swaps, plano:state.plano, custom:state.custom, feito:state.feito, wid:state.wid, local:state.local}); }
 
 let draftTimers = {};
 function saveDraft(wid){
@@ -733,12 +785,20 @@ function draftOf(wid){ state.drafts[wid]=state.drafts[wid]||{}; return state.dra
 function rowsOf(wid,exid){ const d=draftOf(wid); d[exid]=d[exid]||[]; return d[exid]; }
 
 function renderPicker(){
+  const atual = TMAP[state.wid];
+  $("selCod").textContent  = atual.cod;
+  $("selNome").textContent = atual.nome;
+  $("selTreino").setAttribute("aria-expanded", state.listaAberta);
+  $("picker").hidden = !state.listaAberta;
   $("picker").innerHTML = TREINOS.map(t=>{
     const on = t.id===state.wid;
     const d=draftOf(t.id), aberto=Object.keys(d).some(k=>(d[k]||[]).some(r=>num(r.w)>0||num(r.r)>0||r.t==="ok"));
-    return '<button type="button" data-w="'+t.id+'" aria-pressed="'+on+'">'
-      +'<div class="d">'+esc(t.cod)+(aberto?' <span class="aberto">em aberto</span>':'')+'</div>'
-      +'<div class="n">'+esc(t.nome)+'</div></button>';
+    const n=itensOf(t.id).length;
+    return '<li><button type="button" data-w="'+t.id+'" aria-current="'+on+'">'
+      +'<span class="lcod">'+esc(t.cod)+'</span>'
+      +'<span class="lnome">'+esc(t.nome)+(planoEditado(t.id)?' <span class="aberto">editado</span>':'')+(aberto?' <span class="aberto">em aberto</span>':'')+'</span>'
+      +'<span class="lqtd">'+n+' ex.</span>'
+      +'</button></li>';
   }).join("");
   const di=$("dataSessao"); if(di && di.value!==state.data) di.value=state.data;
   const ai=$("academia"); if(ai && ai.value!==state.local) ai.value=state.local||"";
@@ -768,17 +828,53 @@ function setRow(wid, exid, s, i){
     +'<td class="n"><button class="rm" data-rm="'+exid+'" data-i="'+i+'" aria-label="remover">&times;</button></td></tr>';
 }
 
+function itensOf(wid){ return state.plano[wid] || TMAP[wid].itens; }
+function planoEditado(wid){ return !!state.plano[wid]; }
+function feitoOf(wid){ state.feito[wid]=state.feito[wid]||{}; return state.feito[wid]; }
 function swapsOf(wid){ state.swaps[wid]=state.swaps[wid]||{}; return state.swaps[wid]; }
 function usedId(wid, origId){ return swapsOf(wid)[origId] || origId; }
 
+function resumoSeries(uid, rows){
+  const e=EX[uid];
+  if(e.tipo==="mob"||e.tipo==="along") return "feito";
+  if(e.tipo==="cardio"){ const r=rows.find(x=>num(x.w)>0); return r? num(r.w)+" min"+(num(r.r)?" · "+num(r.r)+" bpm":"") : "feito"; }
+  const val=rows.filter(x=>num(x.r)>0);
+  if(!val.length) return "sem série registrada";
+  return val.length+" séries · "+val.map(x=>fmt(num(x.w),num(x.w)%1?1:0)+"×"+num(x.r)).join("  ");
+}
+
+function renderProgresso(){
+  const itens=itensOf(state.wid), f=feitoOf(state.wid);
+  const total=itens.length, ok=itens.filter(it=>f[it.id]).length;
+  const pct= total? Math.round(ok/total*100) : 0;
+  $("progresso").innerHTML = total
+    ? '<span>'+ok+' de '+total+'</span><div class="pbar"><div class="pfill" style="width:'+pct+'%"></div></div><span>'+pct+'%</span>'
+    : '';
+}
+
 function renderEx(){
-  const t=TMAP[state.wid];
+  const itens=itensOf(state.wid);
+  const f=feitoOf(state.wid);
   const out=[];
-  t.itens.forEach((it,idx)=>{
+  itens.forEach((it,idx)=>{
     const uid = usedId(state.wid, it.id);
     const e=EX[uid] || EX[it.id];
+    if(!e) return;
     const trocado = uid!==it.id;
     const rows=rowsOf(state.wid,uid);
+
+    /* ---- concluído: uma linha só ---- */
+    if(f[it.id]){
+      out.push('<article class="ex feito">'
+        +'<button class="ex-feito" data-reabrir="'+it.id+'">'
+        +'<span class="tick">&#10003;</span>'
+        +'<span class="fnome">'+esc(e.nome)+'</span>'
+        +'<span class="fres">'+esc(resumoSeries(uid,rows))+'</span>'
+        +'<span class="freab">reabrir</span>'
+        +'</button></article>');
+      return;
+    }
+
     if(!rows.length && (e.tipo==="carga"||e.tipo==="prep"||e.tipo==="cardio")) rows.push({w:"",r:"",rir:"",t:""});
     const pr=prOf(uid);
     const lt=lastOf(uid);
@@ -798,17 +894,16 @@ function renderEx(){
         +(aberto
           ? '<div class="troca-lista">'
             +(trocado?'<button class="chip chip-on" data-use="'+it.id+'|'+it.id+'">← '+esc(EX[it.id].nome)+' (original)</button>':'')
-            +opcoes.filter(o=>o!==uid).map(o=>'<button class="chip" data-use="'+it.id+'|'+o+'">'+esc(EX[o].nome)+'</button>').join("")
+            +opcoes.filter(o=>o!==uid && EX[o]).map(o=>'<button class="chip" data-use="'+it.id+'|'+o+'">'+esc(EX[o].nome)+'</button>').join("")
             +'</div>'
           : '')
         +'</div>';
     }
+    const btnFeito = '<button class="btn sm" data-feito="'+it.id+'">✓ Concluir</button>';
     let body="";
     if(e.tipo==="mob"||e.tipo==="along"){
-      const done = rows.length>0;
       body='<div class="sets"><div class="row-actions">'
-        +'<button class="btn '+(done?"pri":"")+'" data-done="'+uid+'">'+(done?"✓ Feito":"Marcar como feito")+'</button>'
-        +'<span class="hint">Não entra no volume de séries.</span></div>'+troca+'</div>';
+        +btnFeito+'<span class="hint">Não entra no volume de séries.</span></div>'+troca+'</div>';
     } else {
       const head = e.tipo==="cardio"
         ? '<colgroup><col class="c-x"><col class="c-mn"><col class="c-bp"><col><col class="c-x"></colgroup><thead><tr><th class="n">#</th><th>min</th><th>bpm</th><th>obs.</th><th class="n"></th></tr></thead>'
@@ -817,7 +912,8 @@ function renderEx(){
         +rows.map((s,i)=>setRow(state.wid,uid,s,i)).join("")
         +'</tbody></table></div><div class="row-actions">'
         +'<button class="btn sm" data-add="'+uid+'">+ série</button>'
-        +(e.tipo==="carga"&&lt?'<button class="btn sm" data-rep="'+uid+'">Repetir última sessão</button>':"")
+        +(e.tipo==="carga"&&lt?'<button class="btn sm" data-rep="'+uid+'">Repetir última</button>':"")
+        +btnFeito
         +'<span class="hint">'+(e.tipo==="prep"?"Preparo · não conta no volume":"")+'</span>'
         +'</div>'+troca+'</div>';
     }
@@ -834,6 +930,54 @@ function renderEx(){
       +body+'</article>');
   });
   $("exlist").innerHTML = out.join("");
+  renderProgresso();
+}
+
+/* ============ EDITOR DO TREINO ============ */
+function renderEditor(){
+  const box=$("editor");
+  box.hidden = !state.editando;
+  if(!state.editando){ return; }
+  const t=TMAP[state.wid], itens=itensOf(state.wid);
+  const cat=Object.values(EX).sort((a,b)=> (GNOME[a.grupo]||"").localeCompare(GNOME[b.grupo]||"") || a.nome.localeCompare(b.nome));
+  let g=null, opts="";
+  for(const e of cat){
+    if(e.grupo!==g){ if(g) opts+="</optgroup>"; opts+='<optgroup label="'+esc(GNOME[e.grupo]||e.grupo)+'">'; g=e.grupo; }
+    opts+='<option value="'+e.id+'">'+esc(e.nome)+'</option>';
+  }
+  opts+="</optgroup>";
+  box.innerHTML =
+    '<div class="ed-head"><div class="ed-tit">Editando '+esc(t.cod)+'</div>'
+    +'<span class="hint">'+itens.length+' exercícios</span>'
+    +'<div class="ed-sp">'
+      +(planoEditado(state.wid)?'<button class="btn sm" id="edRestaurar">Restaurar original</button>':'')
+      +'<button class="btn pri sm" id="edFechar">Concluir edição</button>'
+    +'</div></div>'
+    + itens.map((it,i)=>{
+        const e=EX[it.id]; if(!e) return "";
+        return '<div class="ed-row">'
+          +'<div class="ed-ord">'
+            +'<button data-up="'+i+'" '+(i===0?"disabled":"")+' aria-label="subir">&#9650;</button>'
+            +'<button data-down="'+i+'" '+(i===itens.length-1?"disabled":"")+' aria-label="descer">&#9660;</button>'
+          +'</div>'
+          +'<div class="ed-corpo">'
+            +'<div class="ed-nome">'+(i+1)+'. '+esc(e.nome)+' <span class="tag grp">'+esc(GNOME[e.grupo]||e.grupo)+'</span></div>'
+            +'<textarea class="ed-presc" data-presc="'+i+'" aria-label="prescrição">'+esc(it.presc+(it.obs?"\n"+it.obs:""))+'</textarea>'
+          +'</div>'
+          +'<button class="ed-del" data-rem="'+i+'" aria-label="remover">&times;</button>'
+        +'</div>';
+      }).join("")
+    +'<div class="ed-add">'
+      +'<select id="edSel" aria-label="exercício do catálogo">'+opts+'</select>'
+      +'<button class="btn sm" id="edAdd">+ adicionar do catálogo</button>'
+      +'<input type="text" id="edNovoNome" placeholder="ou digite um exercício novo" style="min-width:190px">'
+      +'<select id="edNovoGrupo" aria-label="grupo do exercício novo">'+GRUPOS.map(x=>'<option value="'+x.id+'">'+esc(x.nome)+'</option>').join("")+'</select>'
+      +'<button class="btn sm" id="edAddNovo">+ criar</button>'
+    +'</div>';
+}
+function garantePlano(wid){
+  if(!state.plano[wid]) state.plano[wid] = itensOf(wid).map(it=>({id:it.id, presc:it.presc, obs:it.obs||""}));
+  return state.plano[wid];
 }
 
 function weekAgg(wk){
@@ -979,13 +1123,13 @@ function renderPlano(){
     +LEGENDA.map(l=>'<tr><td class="mono"><b>'+esc(l[0])+'</b></td><td>'+esc(l[1])+'</td><td class="name" style="white-space:normal">'+esc(l[2])+'</td></tr>').join("")+'</tbody>';
   $("planoBody").innerHTML = TREINOS.map(t=>
     '<div class="chart-card"><div class="chart-title">'+esc(t.full)+'</div>'
-    +'<div class="chart-sub">'+esc(t.cod)+' · sugestão de dia: '+esc(t.dia)+' · '+t.itens.length+' exercícios</div>'
+    +'<div class="chart-sub">'+esc(t.cod)+' · sugestão de dia: '+esc(t.dia)+' · '+itensOf(t.id).length+' exercícios'+(planoEditado(t.id)?' · editado por você':'')+'</div>'
     +'<div class="tblwrap"><table class="data"><thead><tr><th>#</th><th>Exercício</th><th>Grupo</th><th>Prescrição</th></tr></thead><tbody>'
-    +t.itens.map((it,i)=>'<tr><td class="mono">'+(i+1)+'</td><td class="name">'+esc(EX[it.id].nome)+'</td><td>'+esc(GNOME[EX[it.id].grupo])+'</td><td class="name mono" style="font-size:12px">'+esc(it.presc).replace(/\n/g,"<br>")+(it.obs?'<br><span style="color:var(--muted)">'+esc(it.obs).replace(/\n/g,"<br>")+'</span>':"")+'</td></tr>').join("")
+    +itensOf(t.id).map((it,i)=>'<tr><td class="mono">'+(i+1)+'</td><td class="name">'+esc(EX[it.id].nome)+'</td><td>'+esc(GNOME[EX[it.id].grupo])+'</td><td class="name mono" style="font-size:12px">'+esc(it.presc).replace(/\n/g,"<br>")+(it.obs?'<br><span style="color:var(--muted)">'+esc(it.obs).replace(/\n/g,"<br>")+'</span>':"")+'</td></tr>').join("")
     +'</tbody></table></div></div>').join("");
 }
 
-function renderAll(){ renderPicker(); renderKpis(); renderEx(); renderEvo(); renderVolume(); renderHist(); renderPlano(); }
+function renderAll(){ renderPicker(); renderKpis(); renderEditor(); renderEx(); renderEvo(); renderVolume(); renderHist(); renderPlano(); }
 
 /* ============================================================
    7. INTERACAO
@@ -999,9 +1143,18 @@ document.querySelectorAll("nav.tabs button").forEach(b=>{
   });
 });
 
+$("selTreino").addEventListener("click", ()=>{
+  state.listaAberta = !state.listaAberta; renderPicker();
+});
 $("picker").addEventListener("click", e=>{
   const b=e.target.closest("button[data-w]"); if(!b) return;
-  state.wid=b.dataset.w; persistLocal(); renderPicker(); renderEx(); renderKpis();
+  state.wid=b.dataset.w; state.listaAberta=false; state.openSwap=null;
+  persistLocal(); renderPicker(); renderEditor(); renderEx(); renderKpis();
+});
+$("btnEditar").addEventListener("click", ()=>{
+  state.editando = !state.editando;
+  $("btnEditar").textContent = state.editando ? "Fechar edição" : "Editar treino";
+  renderEditor();
 });
 
 $("exlist").addEventListener("input", e=>{
@@ -1046,6 +1199,17 @@ $("exlist").addEventListener("click", e=>{
     saveDraft(state.wid); renderEx(); renderPicker();
     return;
   }
+  const fe=e.target.closest("[data-feito]"), re=e.target.closest("[data-reabrir]");
+  if(fe){
+    feitoOf(state.wid)[fe.dataset.feito]=true;
+    state.openSwap=null; persistLocal(); renderEx(); renderPicker();
+    return;
+  }
+  if(re){
+    delete feitoOf(state.wid)[re.dataset.reabrir];
+    persistLocal(); renderEx(); renderPicker();
+    return;
+  }
   const sw=e.target.closest("[data-swap]"), us=e.target.closest("[data-use]");
   if(sw){
     state.openSwap = (state.openSwap===sw.dataset.swap) ? null : sw.dataset.swap;
@@ -1060,6 +1224,56 @@ $("exlist").addEventListener("click", e=>{
     state.openSwap=null;
     persistLocal(); saveDraft(state.wid); renderEx(); renderPicker();
   }
+});
+
+$("editor").addEventListener("click", e=>{
+  const up=e.target.closest("[data-up]"), dn=e.target.closest("[data-down]"), rm=e.target.closest("[data-rem]");
+  if(up||dn){
+    const arr=garantePlano(state.wid);
+    const i=+(up?up.dataset.up:dn.dataset.down), j=up? i-1 : i+1;
+    if(j<0||j>=arr.length) return;
+    [arr[i],arr[j]]=[arr[j],arr[i]];
+    persistLocal(); renderEditor(); renderEx(); return;
+  }
+  if(rm){
+    const arr=garantePlano(state.wid), i=+rm.dataset.rem;
+    if(!confirm("Tirar "+EX[arr[i].id].nome+" deste treino?")) return;
+    arr.splice(i,1);
+    persistLocal(); renderEditor(); renderEx(); renderPicker(); return;
+  }
+  if(e.target.id==="edFechar"){
+    state.editando=false; $("btnEditar").textContent="Editar treino"; renderEditor(); return;
+  }
+  if(e.target.id==="edRestaurar"){
+    if(!confirm("Voltar este treino ao plano original? As séries já registradas não são apagadas.")) return;
+    delete state.plano[state.wid];
+    persistLocal(); renderEditor(); renderEx(); renderPicker(); return;
+  }
+  if(e.target.id==="edAdd"){
+    const id=$("edSel").value; if(!id||!EX[id]) return;
+    garantePlano(state.wid).push({id, presc:"3 x 10 a 12", obs:""});
+    persistLocal(); renderEditor(); renderEx(); renderPicker(); return;
+  }
+  if(e.target.id==="edAddNovo"){
+    const nome=$("edNovoNome").value.trim();
+    if(!nome){ alert("Digite o nome do exercício."); return; }
+    const base = nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"_").replace(/^_|_$/g,"").slice(0,40) || "ex";
+    let id=base, k=2; while(EX[id]) id=base+"_"+(k++);
+    const grupo=$("edNovoGrupo").value;
+    ex(id, nome, grupo);
+    state.custom[id]={nome, grupo, tipo:"carga"};
+    garantePlano(state.wid).push({id, presc:"3 x 10 a 12", obs:""});
+    $("edNovoNome").value="";
+    persistLocal(); renderEditor(); renderEx(); renderPicker(); return;
+  }
+});
+$("editor").addEventListener("input", e=>{
+  const t=e.target; if(!t.dataset || t.dataset.presc===undefined) return;
+  const arr=garantePlano(state.wid), i=+t.dataset.presc;
+  arr[i].presc = t.value;
+  arr[i].obs   = "";
+  persistLocal();
+  clearTimeout(window.__pt); window.__pt=setTimeout(renderEx, 500);
 });
 
 $("academia").addEventListener("input", e=>{
@@ -1092,7 +1306,7 @@ $("histList").addEventListener("click", async e=>{
 
 $("btnDescartar").addEventListener("click", async ()=>{
   if(!confirm("Descartar tudo o que foi registrado neste treino?")) return;
-  state.drafts[state.wid]={}; persistLocal();
+  state.drafts[state.wid]={}; state.feito[state.wid]={}; persistLocal();
   if(store.db){ try{ await store.db.doc("drafts/"+state.wid).delete(); }catch(e){} }
   renderEx(); renderPicker(); renderKpis();
 });
@@ -1114,6 +1328,7 @@ $("btnFinalizar").addEventListener("click", async ()=>{
   }
   state.sessions.push(Object.assign({id}, sess));
   state.drafts[state.wid]={};
+  state.feito[state.wid]={};
   persistLocal();
   if(store.db){ try{ await store.db.doc("drafts/"+state.wid).delete(); }catch(e){} }
   renderAll();
