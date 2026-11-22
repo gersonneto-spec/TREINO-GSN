@@ -4,8 +4,11 @@ Aplicativo web (PWA) para registrar o treino da academia por grupo muscular, em 
 
 ## O que faz
 
-- **Hoje**: capa, 9 grupos musculares, treino do dia, semana contra a meta e missão da semana. Botão de repetir o último treino do grupo e alvo de carga e repetições por exercício.
-- **Evolução**: treinos por semana, séries por grupo, curva por exercício (carga ou 1RM estimado) e recordes recentes.
+- **Hoje**: capa, treinos salvos, 9 grupos musculares, treino do dia, semana contra a meta e missão da semana.
+- **Meus treinos**: treinos montados a partir da prescrição (séries, faixa de repetições, intervalo, técnica e observações), com 3 trocas por exercício. Dá para editar, reordenar, criar e excluir treinos.
+- **Registro série a série**: carga, repetições, aquecimento ou válida e como foi cada série. Alvo de carga e repetições por exercício.
+- **Cronômetro**: tempo do treino, de cada série e de cada descanso.
+- **Evolução**: treinos por semana, séries por grupo, curva por exercício, sessões série a série, descanso e rendimento, recordes recentes.
 - **Desafios**: metas da semana e do mês, sequência de semanas na meta e conquistas.
 - **Corpo**: mapa de frente e de costas. Tocar no músculo mostra os melhores movimentos, e a cor acompanha as séries dos últimos 7 dias.
 - **Técnicas**: 11 técnicas avançadas com passo a passo e exemplo, mais o treino rápido de 15, 25 ou 35 minutos.
