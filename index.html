@@ -39,7 +39,7 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:16px;line-height:1.4;-webkit-tap-highlight-color:transparent}
 button,input,select{font:inherit;color:inherit}
-button{cursor:pointer;border:0;background:none;padding:0}
+button{cursor:pointer;border:0;background:none;padding:0;touch-action:manipulation}
 :focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .num{font-variant-numeric:tabular-nums}
 .disp{font-family:var(--font-display);font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.01em}
@@ -101,7 +101,7 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .sv small{display:block;font-size:11.5px;font-weight:500;color:var(--muted)}
 .srow.dn .sn{color:var(--good)}
 .srow.run{border-color:var(--orange)}
-.erow{display:grid;grid-template-columns:auto 1fr 38px;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.erow{display:grid;grid-template-columns:auto minmax(0,1fr) 42px;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
 .erow:first-of-type{border-top:0}
 .ebtns{display:flex;flex-direction:column;gap:4px}
 .ebtns button{width:36px;height:27px;border-radius:7px;background:var(--ice);color:var(--blue-deep);font-weight:700}
@@ -109,8 +109,8 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .el{text-align:left;min-width:0}
 .el b{display:block;font-size:15px;line-height:1.2;overflow-wrap:anywhere}
 .el span{font-size:12.5px;color:var(--muted)}
-.erow .sdel,.xrow .sdel{width:38px;height:38px;color:var(--muted);font-size:13px;font-weight:700}
-.xrow{display:grid;grid-template-columns:auto 1fr auto 1fr 38px;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;color:var(--muted)}
+.erow .sdel,.xrow .sdel{width:42px;height:42px;border-radius:10px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink);font-size:14px;font-weight:700}
+.xrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto minmax(0,1fr) 42px;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;color:var(--muted)}
 .xrow input{height:44px;border-radius:10px;border:2px solid var(--line);background:var(--bg);text-align:center;font-weight:700;width:100%;font-size:16px;color:var(--ink)}
 .xrow .stype{font-size:12px;font-weight:700;padding:10px 9px;border-radius:8px;background:var(--blue);color:#fff;min-width:66px}
 .xrow .stype.w{background:var(--sky);color:var(--blue-deep)}
@@ -130,17 +130,18 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .alvo b{display:block;font-family:var(--font-display);font-weight:800;font-size:27px;line-height:1.05}
 .alvo .why{display:block;font-size:12.5px;color:var(--muted)}
 .alvo .btn-ghost{flex:none;background:var(--blue);color:#fff}
-.srow{display:grid;grid-template-columns:26px auto 1fr auto 30px;align-items:center;gap:8px;padding:6px 4px 6px 8px;border-radius:10px;border:2px solid transparent;background:var(--bg);margin-bottom:6px;cursor:pointer}
+.srow{display:grid;grid-template-columns:24px auto minmax(0,1fr) auto 42px;align-items:center;gap:7px;padding:6px 6px 6px 8px;border-radius:10px;border:2px solid transparent;background:var(--bg);margin-bottom:6px;cursor:pointer}
 .srow.on{border-color:var(--blue);background:var(--surface)}
 .srow .sn{font-family:var(--font-display);font-weight:800;font-size:20px;color:var(--blue);text-align:center}
 .srow.wu .sn{color:var(--muted)}
-.srow .stype{font-size:12px;font-weight:700;padding:7px 9px;border-radius:8px;background:var(--blue);color:#fff;min-width:64px}
+.srow .stype{font-size:12px;font-weight:700;padding:7px 8px;border-radius:8px;background:var(--blue);color:#fff;min-width:60px}
 .srow.wu .stype{background:var(--sky);color:var(--blue-deep)}
 .srow .sv{font-weight:700;font-size:16px}
 .srow.wu .sv{color:var(--muted);font-weight:600}
-.srow .sfeel{font-size:12px;font-weight:600;padding:7px 8px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);min-width:66px}
+.srow .sfeel{font-size:12px;font-weight:600;padding:7px 6px;border-radius:8px;box-shadow:inset 0 0 0 1px var(--line);color:var(--muted);min-width:62px}
 .srow .sfeel.set{background:var(--ice);color:var(--blue-deep);box-shadow:none}
-.srow .sdel{width:30px;height:30px;color:var(--muted);font-size:14px}
+.srow .sdel{width:42px;height:42px;border-radius:10px;background:var(--surface);box-shadow:inset 0 0 0 1.5px var(--line);color:var(--ink);font-size:15px;font-weight:700;position:relative;z-index:1}
+.srow.on .sdel{background:var(--ice)}
 .addrow{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:2px}
 .addrow .pill{text-align:center}
 .savebar{position:sticky;bottom:0;background:var(--surface);padding:10px 0 calc(env(safe-area-inset-bottom,0px) + 14px);margin-bottom:calc(-1*(env(safe-area-inset-bottom,0px) + 18px))}
@@ -214,13 +215,13 @@ button{cursor:pointer;border:0;background:none;padding:0}
 .sh-sub b{color:var(--ink)}
 .field{margin-bottom:14px}
 .field>label,.field>.lab{display:block;font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-.stepper{display:grid;grid-template-columns:56px 1fr 56px;gap:8px;align-items:stretch}
+.stepper{display:grid;grid-template-columns:56px minmax(0,1fr) 56px;gap:8px;align-items:stretch}
 .stepper button{height:58px;border-radius:12px;background:var(--sky);color:var(--blue-deep);font-size:28px;font-weight:700;line-height:1}
 .stepper button:active{background:var(--m1)}
 .stepper input{width:100%;height:58px;border-radius:12px;border:2px solid var(--line);background:var(--bg);text-align:center;font-family:var(--font-display);font-weight:800;font-size:40px;padding:0 6px}
 .stepper input:focus{border-color:var(--blue);outline:0}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.two .stepper{grid-template-columns:44px 1fr 44px;gap:6px}
+.two .stepper{grid-template-columns:44px minmax(0,1fr) 44px;gap:6px}
 .two .stepper button{height:52px;font-size:24px}
 .two .stepper input{height:52px;font-size:32px}
 .seg{display:flex;gap:6px;flex-wrap:wrap}
@@ -846,7 +847,7 @@ function viewHoje(){
   h+='</div>';
   h+='<section class="card"><h2 class="h">'+(isToday?'Treino de hoje':'Treino de '+dm(UI.date))+'</h2>';
   if(es.length){
-    h+='<p class="sub">'+es.length+(es.length===1?' exercício':' exercícios')+(day.dur?' · '+Math.round(day.dur/60)+' min de treino':'')+'. Toque para editar.</p><div class="list">'+es.slice().sort(function(a,b){return (a.t||0)-(b.t||0);}).map(function(e){return entryRow(e);}).join('')+'</div>';
+    h+='<p class="sub">'+es.length+(es.length===1?' exercício':' exercícios')+(day.dur?' · '+Math.round(day.dur/60)+' min de treino':'')+'. Toque no exercício para editar ou excluir.</p><div class="list">'+es.slice().sort(function(a,b){return (a.t||0)-(b.t||0);}).map(function(e){return entryRow(e);}).join('')+'</div><button class="linkbtn" style="padding:14px 0 0" data-a="daydel">'+(UI.dd===UI.date?'Toque de novo para excluir '+(es.length===1?'o registro':'os '+es.length+' registros'):'Excluir treino do dia')+'</button>';
   }else{
     h+='<p class="empty">Nada registrado ainda. São 3 toques por exercício.</p>';
   }
@@ -1054,7 +1055,7 @@ function renderSheet(){
     hist.forEach(function(e){if(!best||metric(e)>metric(best))best=e;});
     var wt=weekTec(),toPick=!sh.id&&sh.ret==='pick',toPlan=!sh.id&&sh.ret==='plan',slot=(sh.plan&&sh.px!=null&&planGet(sh.plan))?planGet(sh.plan).ex[sh.px]||null:null,rx=slot||rxOf(sh.ex,sh.plan),inQ=!sh.id&&sh.ret==='queue'&&UI.queue,tg=sh.id?null:target(last);
     sh.tg=tg;
-    h='<div class="sh-head"><button class="btn-ghost" data-a="'+(toPick?'back':toPlan?'planback':'close')+'">'+(toPick?'‹ '+GNAME[sh.g]:toPlan?'‹ Treino':inQ?'Sair':'Fechar')+'</button><span class="eyebrow">'+(inQ?(UI.queue.i+1)+' de '+UI.queue.list.length+' · ':'')+(UI.date===today()?'Hoje':dm(UI.date))+'</span></div>'+
+    h='<div class="sh-head"><button class="btn-ghost" data-a="'+(toPick?'back':toPlan?'planback':'close')+'">'+(toPick?'‹ '+GNAME[sh.g]:toPlan?'‹ Treino':inQ?'Sair':'Fechar')+'</button>'+(sh.id?'<button class="btn-ghost" data-a="del">'+(sh.confirm?'Confirmar exclusão':'Excluir registro')+'</button>':'<span class="eyebrow">'+(inQ?(UI.queue.i+1)+' de '+UI.queue.list.length+' · ':'')+(UI.date===today()?'Hoje':dm(UI.date))+'</span>')+'</div>'+
       '<h2 class="sh-title">'+esc(sh.ex)+'</h2>'+
       '<p class="sh-sub num">'+(last?'Última: <b>'+fmtSet(last)+'</b> · '+ago(last.date)+(last.ss?'<br>'+fmtSS(last):'')+(best&&best!==last?'<br>Marca a bater: <b>'+fmtSet(best)+'</b>':''):'Primeiro registro. Vira a marca a bater.')+'</p>'+
       (rx?'<div class="rx"><span class="k">Prescrição</span><span class="num">'+esc(rx.p)+(rx.rest?' · intervalo '+rx.rest+' s':'')+'</span>'+(rx.nota?'<br>'+esc(rx.nota):'')+'</div>':'')+
@@ -1062,14 +1063,13 @@ function renderSheet(){
       (tg?'<div class="alvo"><div><span class="k">Alvo de hoje</span><b class="num">'+fmtSet(tg)+'</b><span class="why">'+tg.why+'</span></div><button class="btn-ghost" data-a="usealvo" data-kg="'+tg.kg+'" data-reps="'+tg.reps+'">Usar alvo</button></div>':'')+
       tmBox(rx)+
       '<div class="field"><div class="lab-row"><span class="lab">Séries</span><span class="eyebrow" id="set-count">'+setCount(sh.ss)+'</span></div><div id="set-list">'+setRows()+'</div>'+
-      '<div class="addrow"><button class="pill" data-a="addset" data-v="1">+ Aquecimento</button><button class="pill" data-a="addset" data-v="0">+ Série válida</button></div></div>'+
+      '<div class="addrow"><button class="pill" data-a="addset" data-v="1">+ Aquecimento</button><button class="pill" data-a="addset" data-v="0">+ Série válida</button></div>'+(sh.ss.length>1?'<button class="linkbtn" style="padding:12px 0 2px" data-a="setdel" data-i="'+sh.ai+'">Remover '+actName()+'</button>':'')+'</div>'+
       '<div class="field"><div class="lab-row"><label class="lab" for="f-kg">Carga (kg) · '+actName()+'</label><div class="seg">'+[1,2.5,5].map(function(s){return '<button class="pill sm" data-a="step" data-v="'+s+'" aria-pressed="'+(UI.step===s)+'">'+fmtKg(s)+'</button>';}).join('')+'</div></div>'+
       '<div class="stepper"><button data-a="adj" data-f="f-kg" data-v="-1" aria-label="Menos carga">−</button><input id="f-kg" class="num" type="text" inputmode="decimal" autocomplete="off" placeholder="0" value="'+(sh.ss[sh.ai].k>0?fmtKg(sh.ss[sh.ai].k):'')+'"><button data-a="adj" data-f="f-kg" data-v="1" aria-label="Mais carga">+</button></div></div>'+
       '<div class="field"><label for="f-reps">Repetições · '+actName()+'</label><div class="stepper"><button data-a="adj" data-f="f-reps" data-v="-1" aria-label="Menos repetições">−</button><input id="f-reps" class="num" type="text" inputmode="numeric" autocomplete="off" value="'+sh.ss[sh.ai].r+'"><button data-a="adj" data-f="f-reps" data-v="1" aria-label="Mais repetições">+</button></div></div>'+
       '<div class="field"><span class="lab">Técnica</span><div class="hscroll" id="tec-row"><button class="pill" data-a="tec" data-v="" aria-pressed="'+(!sh.tec)+'">Nenhuma</button>'+TECS.map(function(t){return '<button class="pill" data-a="tec" data-v="'+t.id+'" aria-pressed="'+(sh.tec===t.id)+'">'+t.n+(t.id===wt.id?' · da semana':'')+'</button>';}).join('')+'</div></div>'+
       '<div class="field"><label for="f-nota">O que achei</label><input class="txt" id="f-nota" type="text" maxlength="200" placeholder="Opcional: ajuste de banco, pegada, dor, sobra" autocomplete="off" value="'+esc(sh.nota||'')+'"></div>'+
       (inQ?'<button class="linkbtn" data-a="skip">Pular exercício</button>':'')+
-      (sh.id?'<button class="linkbtn" data-a="del">'+(sh.confirm?'Toque de novo para excluir':'Excluir registro')+'</button>':'')+
       '<div class="savebar"><button class="cta" data-a="save">'+(sh.id?'Salvar alteração':inQ?'Salvar e seguir':'Salvar registro')+'</button></div>';
   }else if(sh.type==='plan'){
     var P=planGet(sh.id);if(!P){el.innerHTML='';return;}
@@ -1084,6 +1084,7 @@ function renderSheet(){
           ((de||x.tec)?'<div class="chips">'+(de?'<span class="chip ok">Feito'+(de.ex!==x.ex?' com '+esc(de.ex):'')+'</span>':'')+(x.tec?'<span class="chip">'+(TNAME[x.tec]||'')+'</span>':'')+'</div>':'')+
           '</div><div class="r num">'+(bb?'<b>'+fmtSet(bb.e)+'</b>sua marca':'')+'</div></button>';
       }).join('')+'</div>'+
+      '<button class="linkbtn" data-a="pedit">Editar ou excluir este treino</button>'+
       '<div class="savebar"><button class="cta" data-a="planstart"'+(left?'':' disabled')+'>'+(!P.ex.length?'Sem exercícios':left===P.ex.length?'Iniciar treino':left?'Continuar treino':'Treino concluído')+'</button></div>';
   }else if(sh.type==='pedit'){
     var Pe=planGet(sh.id);if(!Pe){el.innerHTML='';return;}
@@ -1251,7 +1252,7 @@ document.addEventListener('click',function(ev){
   else if(a==='reg'){UI.reg=v;var y=window.scrollY;render();window.scrollTo(0,y);}
   else if(a==='rex')openLog(b.dataset.g,v,null,'','close');
   else if(a==='qex')openLog(b.dataset.g,v,null,b.dataset.t,'close');
-  else if(a==='day'){var nd=addDays(UI.date,+v);if(nd<=today()){UI.date=nd;render();}}
+  else if(a==='day'){var nd=addDays(UI.date,+v);if(nd<=today()){UI.date=nd;UI.dd=null;render();}}
   else if(a==='grp')openSheet({type:'pick',g:v,q:''});
   else if(a==='ex')openLog(sh.g,v,null,'','pick');
   else if(a==='back')openSheet({type:'pick',g:sh.g,q:''});
@@ -1319,6 +1320,11 @@ document.addEventListener('click',function(ev){
     sh.ex=v;sh.g=EXG[v]||sl.g;sh.ss=slotRows(sh.plan,sh.px,v);sh.ai=firstValid(sh.ss);sh.sw=false;
     renderSheet();$('#sheet').scrollTop=0;
   }
+  else if(a==='daydel'){
+    if(UI.dd!==UI.date){UI.dd=UI.date;render();return;}
+    UI.dd=null;var dy=S.days[UI.date];if(dy){dy.entries=[];dy.u=Date.now();}
+    clearDraft();commit('dias/'+UI.date);toast('Treino do dia excluído.');
+  }
   else if(a==='tmset'){
     holdForm();
     if(TM.ph==='set'&&TM.ex===sh.ex){
@@ -1375,7 +1381,7 @@ document.addEventListener('click',function(ev){
     UI.queue={g:sh.g,list:li,i:0};openQueue();
   }
   else if(a==='del'){
-    if(!sh.confirm){holdForm();sh.confirm=true;renderSheet();$('#sheet').scrollTop=$('#sheet').scrollHeight;return;}
+    if(!sh.confirm){holdForm();sh.confirm=true;redrawLog();return;}
     var dd=S.days[UI.date];if(dd){dd.entries=dd.entries.filter(function(x){return x.id!==sh.id;});dd.u=Date.now();}
     closeSheet();commit('dias/'+UI.date);toast('Registro excluído.');
   }

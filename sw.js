@@ -1,5 +1,5 @@
 /* Foco - cache simples para uso na academia sem rede */
-const CACHE = "foco-v2";
+const CACHE = "foco-v3";
 const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./foco.jpg", "./icon-180.png"];
 
 self.addEventListener("install", e => {
