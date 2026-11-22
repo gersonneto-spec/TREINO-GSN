@@ -1,41 +1,40 @@
-# TREINO-GSN — Registro de Carga
+# TREINO-GSN: Foco
 
-Aplicativo web (PWA) para registrar séries e acompanhar a evolução de treino exercício por exercício, montado sobre o plano de 8 sessões: mobilidade diária e Treinos 1 a 7.
+Aplicativo web (PWA) para registrar o treino da academia por grupo muscular, em 3 toques por exercício. Substitui o Registro de Carga neste endereço. A versão anterior continua no histórico do repositório.
 
 ## O que faz
 
-- **Treino** — abre no treino do dia da semana. Cada exercício traz a prescrição original (FD, TS, BO, WS, cluster, drop, cadência 1:3, reps na reserva), campos de carga, repetições, RIR e técnica, 1RM estimado calculado em tempo real, marcação de recorde, comparação com a última sessão, botão de repetir a última sessão e cronômetro de descanso que dispara sozinho com o intervalo previsto para aquele exercício.
-- **Evolução** — por exercício: curva de 1RM estimado (fórmula de Epley), tonelagem por sessão e o registro sessão a sessão em tabela.
-- **Volume** — séries válidas por grupo muscular na semana contra a meta (editável) e tonelagem semana a semana. Aquecimento, preparo, alongamento e cardio ficam fora da contagem.
-- **Histórico** — sessões finalizadas, com exportação e importação de backup em JSON.
-- **Plano** — o plano completo com a legenda do protocolo.
+- **Hoje**: capa, 9 grupos musculares, treino do dia, semana contra a meta e missão da semana. Botão de repetir o último treino do grupo e alvo de carga e repetições por exercício.
+- **Evolução**: treinos por semana, séries por grupo, curva por exercício (carga ou 1RM estimado) e recordes recentes.
+- **Desafios**: metas da semana e do mês, sequência de semanas na meta e conquistas.
+- **Corpo**: mapa de frente e de costas. Tocar no músculo mostra os melhores movimentos, e a cor acompanha as séries dos últimos 7 dias.
+- **Técnicas**: 11 técnicas avançadas com passo a passo e exemplo, mais o treino rápido de 15, 25 ou 35 minutos.
 
 ## Onde os dados ficam
 
-Nesta versão (GitHub Pages) tudo é gravado no localStorage do navegador, ou seja **no aparelho em que você registrou**. Não há sincronização entre celular e computador.
+Nesta versão (GitHub Pages) tudo é gravado no localStorage do navegador, ou seja, **no aparelho em que você registrou**. Não há sincronização entre aparelhos. Em Ajustes existe o botão para copiar o histórico em CSV.
 
-Para levar o histórico de um aparelho para outro: aba **Histórico > Exportar backup (.json)** no aparelho de origem, **Importar backup** no de destino. A importação não duplica sessões já existentes.
-
-Existe também uma versão publicada como Artifact no Claude, essa sim com banco sincronizado entre aparelhos.
+A versão principal é a publicada como Artifact no Claude, com banco sincronizado entre aparelhos. É ela que alimenta o resumo semanal de domingo.
 
 ## Instalar no celular
 
-1. Abrir a página no Chrome (Android) ou Safari (iPhone).
+1. Abrir a página no Safari (iPhone) ou Chrome (Android).
 2. Menu do navegador > **Adicionar à tela de início**.
 3. O app abre em tela cheia e funciona sem internet, via service worker.
 
 ## Estrutura
 
-    index.html              app inteiro: plano, cálculo, gráficos e interface, em um único arquivo
+    index.html              app inteiro em um único arquivo
+    foco.jpg                imagem de capa
     manifest.webmanifest    metadados do PWA
     sw.js                   service worker (cache para uso sem rede)
-    icon.svg                ícone (os PNG do PWA vão embutidos no manifest)
+    icon-180.png            ícone para iPhone
+    icon-512.png            ícone do PWA
 
 Sem dependências, sem build, sem framework. Os gráficos são SVG gerados no próprio arquivo.
 
 ## Cálculos
 
-- **1RM estimado**: fórmula de Epley, carga x (1 + reps / 30), aplicada à melhor série de cada sessão.
-- **Série válida**: exercício de carga, com repetições registradas e técnica diferente de aquecimento (WU).
-- **Tonelagem**: soma de carga x repetições das séries válidas.
+- **Marca de um registro**: fórmula de Epley, carga x (1 + reps / 30). Sem carga, vale o número de repetições.
+- **Recorde**: registro que supera a melhor marca anterior do mesmo exercício.
 - **Semana**: de segunda a domingo.

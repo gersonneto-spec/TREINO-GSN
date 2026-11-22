@@ -1,16 +1,16 @@
 {
-  "name": "Registro de Carga",
-  "short_name": "Carga",
-  "description": "Registro de series, recordes e evolucao exercicio por exercicio.",
+  "name": "Foco",
+  "short_name": "Foco",
+  "description": "Registro rapido de treino por grupo muscular, com evolucao, desafios e tecnicas.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#f2f2ef",
-  "theme_color": "#184f95",
+  "background_color": "#F1F5FC",
+  "theme_color": "#0B0B0C",
   "lang": "pt-BR",
   "icons": [
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
   ]
 }

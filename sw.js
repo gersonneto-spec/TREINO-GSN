@@ -1,6 +1,6 @@
-/* Registro de Carga - cache simples para uso na academia sem rede */
-const CACHE = "regcarga-v1";
-const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
+/* Foco - cache simples para uso na academia sem rede */
+const CACHE = "foco-v1";
+const ASSETS = ["./", "./index.html", "./manifest.webmanifest", "./foco.jpg", "./icon-180.png"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
